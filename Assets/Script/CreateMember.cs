@@ -29,8 +29,30 @@ using System.Collections;
 
 public class CreateMember : MonoBehaviour {
 
-	// Use this for initialization
-	void Start ()
+    /// <summary>
+    /// メンバー
+    /// </summary>
+    [SerializeField]
+    private GameObject member = null;
+
+    /// <summary>
+    /// 生成するときの親
+    /// </summary>
+    [SerializeField]
+    private GameObject myFather = null;
+
+    /// <summary>
+    /// 生成用
+    /// </summary>
+    private GameObject clone = null;
+
+    /// <summary>
+    /// 人数を数える
+    /// </summary>
+    private int Count = 1;
+
+    // Use this for initialization
+    void Start ()
     {
 	
 	}
@@ -40,4 +62,20 @@ public class CreateMember : MonoBehaviour {
     {
 	
 	}
+    /// <summary>
+    /// メンバーを増やす
+    /// </summary>
+    public void Increase()
+    {
+        clone = (GameObject)Instantiate(member);            // 生成して
+        clone.transform.SetParent(myFather.transform);      //  親決めて
+        clone.transform.localPosition = new Vector3(member.transform.localPosition.x,
+            member.transform.localPosition.y - member.GetComponent<RectTransform>().sizeDelta.y * (Count),
+            member.transform.localPosition.z);
+        clone.transform.localScale = member.transform.localScale;
+        clone.name = member.name + (Count + 1).ToString();      //  名前変える
+        Count++;
+
+        Debug.Log("＼(^o^)／");
+    }
 }
